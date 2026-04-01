@@ -1,3 +1,6 @@
 output "service_name" {
   value = render_web_service.flask_app.name
 }
+output "adminer_service_name" {
+  value = render_web_service.adminer_app.name
+}
