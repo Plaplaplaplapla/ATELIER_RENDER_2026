@@ -33,5 +33,16 @@ env_vars = {
     value = "production"
   }
 }
+resource "render_web_service" "adminer_app" {
+  name   = "adminer-render-iac-${var.github_actor}"
+  plan   = "free"
+  region = "frankfurt"
+
+  runtime_source = {
+    image = {
+      image_url = "docker.io/library/adminer"
+      tag       = "latest"
+}
+}
 }
 
