@@ -12,13 +12,10 @@ provider "render" {
   owner_id = var.render_owner_id
 }
 
-variable "github_actor" {
-  description = "GitHub username"
-  type        = string
-}
+variable "github_actor" { type = string }
 
 resource "render_web_service" "flask_app" {
-  name   = "flask-render-iac-${var.github_actor}"
+  name   = "flask-alexis-v10"
   plan   = "free"
   region = "frankfurt"
 
@@ -28,13 +25,15 @@ resource "render_web_service" "flask_app" {
       tag       = var.image_tag
     }
   }
-env_vars = {
-  ENV = {
-    value = "production"
+
+  env_vars = {
+    "ENV" = { value = "production" },
+    "DATABASE_URL" = { value = "postgresql://ma_db_flask_user:xyRR3jo1vh3sPDa17xxJ9QN2M1u3UnKK@dpg-d76h6olm5p6s73bmopn0-a/ma_db_flask" }
   }
 }
-resource "render_web_service" "adminer_app" {
-  name   = "adminer-render-iac-${var.github_actor}"
+
+resource "render_web_service" "adminer" {
+  name   = "adminer-alexis-v10"
   plan   = "free"
   region = "frankfurt"
 
@@ -42,7 +41,6 @@ resource "render_web_service" "adminer_app" {
     image = {
       image_url = "docker.io/library/adminer"
       tag       = "latest"
+    }
+  }
 }
-}
-}
-
